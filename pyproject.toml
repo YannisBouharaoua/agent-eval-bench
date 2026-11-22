@@ -1,0 +1,34 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agent-eval-bench"
+version = "0.1.0"
+description = "Banc d'évaluation d'agents IA : qualité, robustesse, sécurité, latence, coût, et un verdict argumenté."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Yannis Bouharaoua" }]
+dependencies = ["httpx>=0.27"]
+
+[project.optional-dependencies]
+judge = ["anthropic>=0.40"]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+evalbench = "evalbench.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/evalbench"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
